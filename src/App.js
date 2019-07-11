@@ -25,24 +25,24 @@ const particlesOptions = {
         }
     }
 };
-
+const initState ={
+    input:'',
+    imageUrl:'',
+    box:{},
+    route:'signIn',
+    isSignedIn: false,
+    user: {
+        id: '',
+        name: '',
+        email: '',
+        entries: 0,
+        joined: ''
+    }
+};
 class App extends Component{
     constructor(props){
         super(props);
-        this.state = {
-            input:'',
-            imageUrl:'',
-            box:{},
-            route:'signIn',
-            isSignedIn: false,
-            user:{
-                id: '',
-                name: '',
-                email: '',
-                entries: 0,
-                joined: ''
-            }
-        }
+        this.state = initState;
     }
     /*TODO: Remove Proxy in package when go live */
 
@@ -59,7 +59,6 @@ class App extends Component{
             rightCol: width - (clarifaiFace.right_col * width),
             bottomRow: height - (clarifaiFace.bottom_row * height)
         }
-
     };
 
     displayFaceBox = (box)=>{
@@ -74,8 +73,6 @@ class App extends Component{
                 entries: 0,
                 joined: data.joined
             }});
-
-        console.log()
     };
 
     onInputChange = (event) =>{
@@ -101,6 +98,7 @@ class App extends Component{
                                 entries: count
                             }))
                         })
+                        .catch(console.log)
                 }
                 this.displayFaceBox(this.calculateFaceLocation(response))
             })
@@ -109,7 +107,7 @@ class App extends Component{
 
     onRouteChange = (route) => {
         if (route === 'signOut'){
-            this.setState({ isSignedIn : false})
+            this.setState(initState)
         }else if(route === 'home'){
             this.setState({ isSignedIn : true})
         }
